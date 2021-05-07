@@ -4,7 +4,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 # About the project.
 
-This is a simple project to find the weather information for the 5 days from now
+This is a simple project to find the weather information of a location for the 5 days from now
 
 # How to use
 
