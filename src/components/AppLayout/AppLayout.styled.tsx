@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 
 const AppLayout = styled.div`
-  padding: 10% 20%;
+  width: 1100px;
+  margin: 0 auto;
+  padding: 10% 0;
 `;
 
 export default {

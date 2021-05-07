@@ -15,13 +15,13 @@ export const WeatherForecastListByLocation: React.FC<IProps> = ({
   const { consolidated_weather } = weatherForecastsByLocation;
 
   return (
-    <>
+    <Styled.Wrapper>
       <h2>{weatherForecastsByLocation.title}</h2>
       <Styled.WeatherForecastGroup>
         {consolidated_weather.slice(0, SHOW_LIMIT).map((weather) => (
           <WeatherForecastItem key={weather.id} consolidatedWeather={weather} />
         ))}
       </Styled.WeatherForecastGroup>
-    </>
+    </Styled.Wrapper>
   );
 };
