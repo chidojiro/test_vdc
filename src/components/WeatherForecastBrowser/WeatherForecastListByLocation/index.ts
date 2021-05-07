@@ -1,0 +1,1 @@
+export { WeatherForecastListByLocation } from './WeatherForecastListByLocation';
