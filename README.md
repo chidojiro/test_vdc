@@ -2,6 +2,14 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+# About the project.
+
+This is a simple project to find the weather information for the 5 days from now
+
+# How to use
+
+Type the location you want to check in the search input and press enter.
+
 # Installation
 
 Run `yarn` or `yarn install` to install node modules before starting the application
@@ -24,3 +32,7 @@ Not supported yet
 This app uses react-testing-library and jest
 
 - to run the tests: `yarn test`
+
+# Author
+
+https://github.com/chidojiro
