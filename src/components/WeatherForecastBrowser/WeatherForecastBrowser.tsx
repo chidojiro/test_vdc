@@ -45,7 +45,8 @@ export const WeatherForecastBrowser: React.FC = () => {
         <Typography.Text type='danger'>Something went wrong</Typography.Text>
       );
 
-    if (!weatherForecasts || statusCode === 404) return <Empty />;
+    if (!weatherForecasts || statusCode === 404)
+      return <Empty data-testid='empty-indicator' />;
 
     return (
       <WeatherForecastListByLocation
@@ -61,6 +62,7 @@ export const WeatherForecastBrowser: React.FC = () => {
         onChange={(e) => setLocationQuery(e.target.value)}
         onKeyDown={handleLocationQueryKeydown}
         style={{ marginBottom: '20px' }}
+        placeholder='Enter location'
       />
       {renderWeatherForecastListByLocation()}
     </AppLayout>
