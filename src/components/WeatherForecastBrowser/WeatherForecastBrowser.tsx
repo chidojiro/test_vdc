@@ -8,6 +8,7 @@ import {
   getWeatherForecastsByWoeid,
 } from '../../services';
 import { WeatherForecastListByLocation } from './WeatherForecastListByLocation';
+import Styled from './WeatherForecastBrowser.styled';
 
 export const WeatherForecastBrowser: React.FC = () => {
   const [locationQuery, setLocationQuery] = React.useState('');
@@ -64,7 +65,9 @@ export const WeatherForecastBrowser: React.FC = () => {
         style={{ marginBottom: '20px' }}
         placeholder='Enter location'
       />
-      {renderWeatherForecastListByLocation()}
+      <Styled.ResultContainer>
+        {renderWeatherForecastListByLocation()}
+      </Styled.ResultContainer>
     </AppLayout>
   );
 };
