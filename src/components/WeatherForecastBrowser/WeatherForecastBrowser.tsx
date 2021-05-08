@@ -1,45 +1,34 @@
 import { Empty, Input, Spin, Typography } from 'antd';
 import { AxiosError } from 'axios';
 import React from 'react';
-import { useMutation } from 'react-query';
 import { AppLayout } from '..';
-import {
-  getLocationsByQuery,
-  getWeatherForecastsByWoeid,
-} from '../../services';
-import { WeatherForecastListByLocation } from './WeatherForecastListByLocation';
+import { useWeatherForecastBrowser } from './useWeatherForecastBrowser';
+import { WeatherForecastBrowserProvider } from './WeatherForecastBrowser.context';
 import Styled from './WeatherForecastBrowser.styled';
+import { WeatherForecastListByLocation } from './WeatherForecastListByLocation';
 
-export const WeatherForecastBrowser: React.FC = () => {
+const WrappedWeatherForecastBrowser: React.FC = () => {
   const [locationQuery, setLocationQuery] = React.useState('');
 
   const {
+    searchWeatherForecastByLocation,
     data: weatherForecasts,
     error: weatherForecastsError,
-    mutate: performGetWeatherForecastsByQuery,
-    isLoading: isLoadingWeatherForecasts,
-  } = useMutation(async (locationQuery: string) => {
-    const locations = await getLocationsByQuery(locationQuery);
-
-    const firstFoundLocation = locations[0];
-
-    if (!firstFoundLocation) return null;
-
-    return getWeatherForecastsByWoeid(firstFoundLocation.woeid);
-  }, {});
+    isValidating: isValidatingWeatherForecasts,
+  } = useWeatherForecastBrowser();
 
   const handleLocationQueryKeydown: React.KeyboardEventHandler<HTMLInputElement> = (
     e
   ) => {
     if (e.code === 'Enter' && !!locationQuery) {
-      performGetWeatherForecastsByQuery(locationQuery);
+      searchWeatherForecastByLocation(locationQuery);
     }
   };
 
   const renderWeatherForecastListByLocation = () => {
     const statusCode = (weatherForecastsError as AxiosError)?.response?.status;
 
-    if (isLoadingWeatherForecasts) return <Spin size='large' />;
+    if (isValidatingWeatherForecasts) return <Spin size='large' />;
 
     if (weatherForecastsError && statusCode !== 404)
       return (
@@ -69,5 +58,13 @@ export const WeatherForecastBrowser: React.FC = () => {
         {renderWeatherForecastListByLocation()}
       </Styled.ResultContainer>
     </AppLayout>
+  );
+};
+
+export const WeatherForecastBrowser: React.FC = () => {
+  return (
+    <WeatherForecastBrowserProvider>
+      <WrappedWeatherForecastBrowser />
+    </WeatherForecastBrowserProvider>
   );
 };
