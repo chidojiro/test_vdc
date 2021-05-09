@@ -42,7 +42,7 @@ jest.mock('../../../services', () => ({
       ],
     });
   },
-  getLocationsByQuery: (query) => {
+  getLocationsByQuery: (query: string) => {
     if (query === 'london')
       return Promise.resolve([{ title: 'London', woeid: 44418 }]);
     if (query === 'empty') return Promise.resolve([]);
@@ -52,6 +52,7 @@ jest.mock('../../../services', () => ({
 
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
+import * as Services from '../../../services';
 import { App } from '../../../App';
 
 const renderWeatherForecastBrowser = () => {
@@ -61,6 +62,26 @@ const renderWeatherForecastBrowser = () => {
 };
 
 describe('WeatherForecastBrowser', () => {
+  it('should initially shows empty indicator', async () => {
+    renderWeatherForecastBrowser();
+
+    await screen.findByTestId('empty-indicator');
+  });
+
+  it('should not call apis when search input is empty', async () => {
+    jest.spyOn(Services, 'getLocationsByQuery');
+    jest.spyOn(Services, 'getWeatherForecastsByWoeid');
+
+    renderWeatherForecastBrowser();
+
+    fireEvent.keyDown(screen.getByPlaceholderText('Enter location'), {
+      code: 'Enter',
+    });
+
+    expect(Services.getLocationsByQuery).not.toBeCalled();
+    expect(Services.getWeatherForecastsByWoeid).not.toBeCalled();
+  });
+
   it('should show weather forecasts for London', async () => {
     renderWeatherForecastBrowser();
 
