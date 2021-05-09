@@ -14,6 +14,13 @@ Type the location you want to check in the search input and press enter.
 
 Run `yarn` or `yarn install` to install node modules before starting the application
 
+# Libraries/Tools used
+
+`ant-design` for common UI components
+`swr` fro data fetching
+`react-context` for state management
+`styled-components` for styling
+
 # Development
 
 Open 2 terminals, one for React dev server and one for node server:
